@@ -22,7 +22,7 @@ To run a development version via emulators you need development environment to b
 1. Android Studio - for android
 2. Xcode - for ios
 
-and the run:
+and then run:
 
 For iOS: `npm run ios`
 For Android: `npm run android`
