@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { InitialState, NavigationContainer } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, BackHandler, Platform } from 'react-native';
+import { Alert, BackHandler, Platform } from 'react-native';
 
 import { PERSISTENCE_KEY } from '@src/constants/persist';
 
@@ -27,26 +27,24 @@ export const Router = () => {
     !isReady && restoreState();
   }, [isReady]);
 
+  const handleChangeState = (state?: InitialState) => {
+    return state && AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+  };
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backHandler);
 
     return () => BackHandler.removeEventListener('hardwareBackPress', backHandler);
   }, []);
 
-  const handleChangeState = (state?: InitialState) => {
-    return state && AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
-  };
-
   const backHandler = () => {
     Alert.alert('Back button is disabled');
     return true;
   };
 
-  return isReady ? (
+  return (
     <NavigationContainer initialState={initialState} onStateChange={handleChangeState}>
       <MainStack />
     </NavigationContainer>
-  ) : (
-    <ActivityIndicator size={52} />
   );
 };
