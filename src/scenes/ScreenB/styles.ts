@@ -8,8 +8,15 @@ export const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  flex0: {
+    flex: 0,
+  },
   backLink: {
     padding: 10,
   },
   backLinkText: { color: 'blue', textDecorationLine: 'underline' },
+  flexCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
