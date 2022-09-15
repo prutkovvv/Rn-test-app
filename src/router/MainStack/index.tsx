@@ -18,6 +18,8 @@ export const MainStack = () => {
         headerShown: true,
         headerStyle: { backgroundColor: '#fff' },
         headerTitleAlign: 'center',
+        headerBackTitleVisible: false,
+        gestureEnabled: false,
       }}
       initialRouteName="BottomStack">
       <Stack.Screen name="ScreenA" component={ScreenA} />
