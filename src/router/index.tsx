@@ -47,6 +47,6 @@ export const Router = () => {
       <MainStack />
     </NavigationContainer>
   ) : (
-    <ActivityIndicator />
+    <ActivityIndicator size={52} />
   );
 };
