@@ -1,25 +1,22 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { InitialState, NavigationContainer } from "@react-navigation/native";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, BackHandler, Platform } from "react-native";
-import { MainStack } from "./MainStack";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { InitialState, NavigationContainer } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, Alert, BackHandler, Platform } from 'react-native';
 
-const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
+import { MainStack } from './MainStack';
+
+const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 
 export const Router = () => {
   const [isReady, setIsReady] = useState(false);
-  const [initialState, setInitialState] = useState<InitialState | undefined>(
-    undefined
-  );
+  const [initialState, setInitialState] = useState<InitialState | undefined>(undefined);
 
   useEffect(() => {
     const restoreState = async () => {
       try {
-        if (Platform.OS !== "web") {
+        if (Platform.OS !== 'web') {
           const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
-          const state = savedStateString
-            ? JSON.parse(savedStateString)
-            : undefined;
+          const state = savedStateString ? JSON.parse(savedStateString) : undefined;
 
           state && setInitialState(state);
         }
@@ -31,28 +28,22 @@ export const Router = () => {
   }, [isReady]);
 
   useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", backHandler);
+    BackHandler.addEventListener('hardwareBackPress', backHandler);
 
-    return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backHandler);
+    return () => BackHandler.removeEventListener('hardwareBackPress', backHandler);
   }, []);
 
   const handleChangeState = (state?: InitialState) => {
-    return (
-      state && AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
-    );
+    return state && AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
   };
 
   const backHandler = () => {
-    Alert.alert("Back button is disabled");
+    Alert.alert('Back button is disabled');
     return true;
   };
 
   return isReady ? (
-    <NavigationContainer
-      initialState={initialState}
-      onStateChange={handleChangeState}
-    >
+    <NavigationContainer initialState={initialState} onStateChange={handleChangeState}>
       <MainStack />
     </NavigationContainer>
   ) : (
