@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ScreenA } from '@src/scenes/ScreenA';
 import { ScreenB } from '@src/scenes/ScreenB';
+import { useBackHandler } from '@src/utils/hooks/useBackHandler';
 
 import { BottomTabs } from '../BottomTabs';
 
@@ -12,6 +13,7 @@ const Stack = createNativeStackNavigator<MainStackParamList>();
 const bottomStackOptions = { headerShown: false };
 
 export const MainStack = () => {
+  useBackHandler();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -29,11 +31,6 @@ export const MainStack = () => {
             headerShown: Boolean(!route.params?.webViewShown),
           };
         }}
-        listeners={({ navigation }) => ({
-          focus: () => {
-            navigation.setParams({ webViewShown: false });
-          },
-        })}
         name="ScreenB"
         component={ScreenB}
       />
